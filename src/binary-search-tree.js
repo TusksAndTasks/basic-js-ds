@@ -44,27 +44,20 @@ module.exports = class BinarySearchTree {
   }
 
   has(data) {
-    return isDataHere(this.activeRoot, data);
-     
-    function isDataHere(node, data){
+    return searchWithin(this.activeRoot, data);
 
-     if (!node){
-       return false;
-     }
+    function searchWithin(node, data) {
+      if (!node) {
+        return false;
+      }
 
-     
-     if (node.data === data){
-      return true;
-   }
+      if (node.data === data) {
+        return true;
+      }
 
-     if(data < node.data){
-       return isDataHere(node.left, data);
-     }
-
-     if(data > node.data){
-       return isDataHere(node.right, data);
-     }
-     
+      return data < node.data ? 
+        searchWithin(node.left, data) : 
+        searchWithin(node.right, data);
     }
   }
 
