@@ -75,7 +75,46 @@ module.exports = class BinarySearchTree {
   }
 
   remove(data) {
+      this.activeRoot = removeNode(this.activeRoot, data)
+    
+    function removeNode(node, data){
+      if (!node){
+        return null
+      }
+
+      if (data < node.data) {
+        node.left = removeNode(node.left, data);
+        return node;
+      } 
+      if(data > node.data) {
+        node.right = removeNode(node.right, data);
+        return node;
+      }else {
+        if(!node.left && !node.right){
+          return null; 
+        }
+        
+        if (!node.right){
+          node = node.left;
+          return node;
+        } 
+
+        if (!node.left){
+          node = node.right;
+          return node;
+        }
+
+           let maxLeftNode = node.left;
+           while(maxLeftNode.right){
+             maxLeftNode = maxLeftNode.right;
+           }
+          node.data = maxLeftNode.data;
+          node.left = removeNode(node.left, maxLeftNode.data);
+          return node;
+        
+      }
   }
+}
 
   min() {
     let leftTracker = this.activeRoot
